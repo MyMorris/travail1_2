@@ -9,18 +9,18 @@ void draw() {
   AnimPontRoulant();
 }
 void Pontroulant() {
-  scale(1.0 f, -1.0 f);
+  scale(1.0f, -1.0f);
   stroke(155, 102, 0);
   translate(200, -800);
-  arc(p3.x, p3.y, height / 10.0 f, height / 10.0 f, 0.0 f, radians(360.0 f));
-  arc(p4.x, p4.y, height / 10.0 f, height / 10.0 f, 0.0 f, radians(360.0 f));
+  arc(p3.x, p3.y, height / 10.0f, height / 10.0f, 0.0f, radians(360.0f));
+  arc(p4.x, p4.y, height / 10.0f, height / 10.0f, 0.0f, radians(360.0f));
   strokeWeight(5);
   stroke(74, 74, 74);
   if (frameCount % 2 == 0)
     //position moteur 1
     fill(224, 224, 224);
-  line(200, height / 20.0 f, 800, height / 20.0 f);
-  line(200, -height / 20.0 f, 800, -height / 20.0 f);
+  line(200, height / 20.0f, 800, height / 20.0f);
+  line(200, -height / 20.0f, 800, -height / 20.0f);
 }
 void AnimPontRoulant() {
   pushMatrix();
