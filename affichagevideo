@@ -1,0 +1,13 @@
+import processing.video.*;
+Movie fondecran;
+
+void setup(){
+  size(1920,1080);
+  fondecran= new Movie(this,"video.mov");
+  fondecran.loop();}
+  
+  void movieEvent(Movie fondecran)
+  {fondecran.read();}
+  
+  void draw(){
+    image(fondecran,0,0,width,height);}
