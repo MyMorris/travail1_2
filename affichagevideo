@@ -1,13 +1,13 @@
 import processing.video.*;
-Movie fondecran;
+Movie ecrantv;
 
 void setup(){
   size(1920,1080);
-  fondecran= new Movie(this,"video.mov");
-  fondecran.loop();}
+  ecrantv= new Movie(this,"video.mov");
+  ecrantv.loop();}
   
-  void movieEvent(Movie fondecran)
-  {fondecran.read();}
+  void movieEvent(Movie ecrantv)
+  {ecrantv.read();}
   
   void draw(){
-    image(fondecran,0,0,width,height);}
+    image(ecrantv,0,0,width,height);}
