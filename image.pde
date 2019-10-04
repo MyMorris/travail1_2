@@ -100,7 +100,7 @@ popMatrix();
 void boiteSupport(){
   pushMatrix();
   scale(0.5);
-  translate(500,0);
+  translate(700,0);
   textSize(32);
 text("boiteSupport", 542, 320); 
 noStroke();
