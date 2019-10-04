@@ -23,20 +23,10 @@ void brasmecanique(){
 text("brasMecanique", 644, 338); 
 noStroke();
 fill(112, 108, 105);
-beginShape();
-vertex(657.9, 338.5);
-vertex(657.9, 347.1);
-vertex(597.1, 347.1);
-vertex(597.1, 338.5);
-vertex(610.3, 338.5);
-vertex(610.3, 329.9);
-vertex(622, 329.9);
-vertex(622, 163.5);
-vertex(633, 163.5);
-vertex(633, 329.9);
-vertex(644.7, 329.9);
-vertex(644.7, 338.5);
-endShape(CLOSE);
+fill(112, 108, 105);
+rect(510,200,80,10);
+rect(525,190,50,10);
+rect(545,80,10,110);
 }
 void gyroscope(){
   noStroke();
