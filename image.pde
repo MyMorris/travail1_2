@@ -2,7 +2,6 @@
 
 void setup(){
 size(1280, 1024);
-
 }
 void draw(){
   background(#ffffff);
@@ -15,7 +14,6 @@ void draw(){
    distributeur();
    lumiereRouge();
    lumiereVerte();
-
 }
 
 void brasmecanique(){
