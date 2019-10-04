@@ -23,7 +23,6 @@ void brasmecanique(){
 text("brasMecanique", 644, 338); 
 noStroke();
 fill(112, 108, 105);
-fill(112, 108, 105);
 rect(510,200,80,10);
 rect(525,190,50,10);
 rect(545,80,10,110);
