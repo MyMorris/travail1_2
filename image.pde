@@ -128,32 +128,22 @@ void bouton(){
 }
 void chariot(){
   pushMatrix();
-
   scale(0.5);
-      translate(1000,800);
-    text("chariot", 748, 419);
-
-noStroke();
-fill(74, 187, 183);
-stroke(0, 0, 0);
-rect(748.5, 419.8, 415.4, 242.3);
-fill(112, 108, 105);
-rect(913.8, 489, 84.6, 101.9);
-beginShape();
-vertex(878.4, 489.6);
-vertex(793.7, 534.8);
-vertex(878.4, 590.8);
-endShape(CLOSE);
-beginShape();
-vertex(1034.3, 590.6);
-vertex(1034.3, 488.7);
-vertex(1118.9, 539.8);
-endShape(CLOSE);
-noStroke();
-fill(74, 187, 183);
-stroke(0, 0, 0);
-rect(801.3, 661.2, 315.1, 65.9);
-popMatrix();
+  translate(1000,800);
+  text("chariot", 748, 419);
+  noStroke();
+  fill(74, 187, 183);
+  stroke(0, 0, 0);
+  rect(748.5, 419.8, 415.4, 242.3);
+  fill(112, 108, 105);
+  rect(913.8, 489, 84.6, 101.9);
+  triangle(878.4,489.6,793.7,534.8,878.4,590.9);
+  triangle(1034.3,590.6,1034.3,488.7,1118.9,539.8);
+  noStroke();
+  fill(74, 187, 183);
+  stroke(0, 0, 0);
+  rect(801.3, 661.2, 315.1, 65.9);
+  popMatrix();
 }
 void distributeur(){
     pushMatrix();
