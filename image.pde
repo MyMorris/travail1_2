@@ -26,19 +26,6 @@ rect(525,190,50,10);
 rect(545,80,10,110);
 }
 void gyroscope(){
-  noStroke();
-fill(246, 130, 103);
-stroke(0, 0, 0);
-beginShape();
-vertex(259.7, 259.9);
-vertex(259.7, 227.6);
-vertex(259.6, 227.6);
-bezierVertex(263.2, 224.6, 265.6, 219.9, 265.6, 214.7);
-bezierVertex(265.6, 205.7, 258.7, 198.3, 250.2, 198.3);
-bezierVertex(241.7, 198.3, 234.8, 205.6, 234.8, 214.7);
-bezierVertex(234.8, 220.2, 237.4, 225.1, 241.3, 228.1);
-vertex(241.3, 260);
-endShape();
 noStroke();
 fill(246, 130, 103);
 stroke(0, 0, 0);
