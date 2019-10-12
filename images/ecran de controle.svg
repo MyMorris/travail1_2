@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1920 1080" style="enable-background:new 0 0 1920 1080;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#706C69;}
+	.st1{stroke:#FFFFFF;stroke-miterlimit:10;}
+	.st2{fill:#FFFFFF;stroke:#413D3C;stroke-width:9;stroke-miterlimit:10;}
+	.st3{fill:#EE5148;}
+	.st4{fill:#4ABBB7;}
+</style>
+<g id="portique">
+	<rect x="932.12" y="-145.58" class="st0" width="44.23" height="723.08"/>
+</g>
+<g id="cadre_exterieur">
+	<path class="st1" d="M1209.04,717.88H701.35c-12.21,0-22.12-9.9-22.12-22.12V382.31c0-12.21,9.9-22.12,22.12-22.12h507.69
+		c12.21,0,22.12,9.9,22.12,22.12v313.46C1231.15,707.98,1221.25,717.88,1209.04,717.88z"/>
+</g>
+<g id="fond_ecran">
+	<rect x="725.38" y="396.73" class="st2" width="467.31" height="288.46"/>
+</g>
+<g id="veilleuse">
+	<circle class="st3" cx="1163.89" cy="703.55" r="8.17"/>
+	<circle class="st4" cx="1185.85" cy="703.55" r="8.68"/>
+</g>
+</svg>
