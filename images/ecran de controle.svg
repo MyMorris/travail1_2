@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 14400 14400" enable-background="new 0 0 14400 14400" xml:space="preserve">
+<g id="portique">
+	<rect x="7171.62" y="6513.92" fill="#706C69" width="44.23" height="723.08"/>
+</g>
+<g id="cadre_exterieur">
+	<path stroke="#FFFFFF" stroke-miterlimit="10" d="M7448.54,7377.38h-507.69c-12.21,0-22.12-9.9-22.12-22.12v-313.46
+		c0-12.21,9.9-22.12,22.12-22.12h507.69c12.21,0,22.12,9.9,22.12,22.12v313.46C7470.65,7367.48,7460.75,7377.38,7448.54,7377.38z"/>
+</g>
+<g id="fond_ecran">
+	
+		<rect x="6964.88" y="7056.23" fill="#FFFFFF" stroke="#413D3C" stroke-width="9" stroke-miterlimit="10" width="467.31" height="288.46"/>
+</g>
+<g id="veilleuse">
+	<circle fill="#EE5148" cx="7403.39" cy="7363.05" r="8.17"/>
+	<circle fill="#4ABBB7" cx="7425.35" cy="7363.05" r="8.68"/>
+</g>
+</svg>
