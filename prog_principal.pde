@@ -1,5 +1,5 @@
 // TP1 prog principal 2019
-// Nancy Dodier, Pierre Sévigny, Myriam Morris, David Martin, Jean-Philippe Dufour
+// Nancy Dodier, Jean-Philippe Dufour, David Martin Pierre Sévigny
 
 // images fixe machine,ecran,distributeur
 String file = "background photo.jpg";//  background 
@@ -12,7 +12,10 @@ PShape ecran; // SVG ecran de controle
 import processing.video.*;
 Movie video;
 
-
+// Police de caractère ----
+  PFont policeONOFF;
+  PFont policeMoniteur;
+  
 // images en mouvement ou animé------------------
 PShape chariot; // chariot
 //PShape boite;// boite
@@ -21,7 +24,7 @@ PShape chariot; // chariot
 PShape gyroscopeoff; // gyroscope eteind
 //PShape lumierrouge;//lumiére rouge
 PShape lumiereverte; //lumiére verte
-//PShape brasmecanique;// bras mecanique
+PShape brasmecanique;// bras mecanique
 
 
 //------tapis roulant-------------------
@@ -31,12 +34,18 @@ PVector p4 = new PVector(800, 0, 00);
 //-----------------------------------------------------------------
 
 void setup() {
+
+ policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
+ policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
+ 
  size(1920,1080); // full hd
+ img= loadImage("background_photo.jpg"); //load background-image 
  frameRate(30); // 30 images seconde
  
  
  // --------affichage image fixe-----------
  machine = loadShape("machine.svg");//SVG machine
+
  distributeur = loadShape("distributeur.svg");//SVG distributeur
  ecran = loadShape("ecran.svg");//SVG ecran de controle
  
@@ -52,7 +61,7 @@ void setup() {
 
 //--------affichage bras mecanique---------
 
-//brasmecanique= loadShape("bras mecanique");
+brasmecanique= loadShape("bras mecanique.svg");
 
 //----------affichage video--------------
 video = new Movie(this, "video surveillance.mov");
@@ -64,15 +73,12 @@ video.loop();
  
  void draw()
 {
-
 imageMode(CORNER);//  background
-img= loadImage("background photo.jpg");
-image(img, 0, 0, width , height);//fin background
 
-shape(machine, -450, 400, 1200, 800);//SVG machine
- shape(distributeur,150,10,1500,900);//SVG distributeur
- shape(ecran,10,-350,700,700);// ecran de controle
- 
+tint(50);
+image(img, 0, 0, width , height);
+filter(GRAY);//fin background
+
  //-------support avant et arriere tapis roulant
  fill (74,187,183);// couleur bleu moodboard
  rect (1250,900,150,100);// support arriere
@@ -94,19 +100,45 @@ shape(machine, -450, 400, 1200, 800);//SVG machine
  
  //---------animation bras mecanique-----
  
-// shape(brasmecanique,500,500,100,200);
+ shape(brasmecanique,309,100,1200,1400);
+ 
+ //----- Machine -------
+ shape(machine, -450, 400, 1200, 800);
+ //-------- Distributeur -----
+ shape(distributeur,150,10,1500,900);
+ //-------- Écran de controle -------
+ shape(ecran,10,-350,700,700);
   
   //-----------video-----------
- 
+ //tint(91 , 255, 127, 255);
+ noTint();
 image(video, 150, 80,394,230);
+
+//bouton on-off de la machine
+  fill(21, 104, 51);
+  noStroke();
+  ellipse(150, 710, 50, 60);
+  fill(181, 54, 51);
+  ellipse(150, 840, 50, 60);
+  
+  // ---- boutons avance-recule du chariot porticle ---
+  stroke(#000000);
+  strokeWeight(0.5);
+  fill(112,108,105);
+    triangle(1288,535,1255,550,1288,565);
+  triangle(1358,535,1391,550,1358,565);
+  //noStroke();
 
 //-----------textes--------
 
-textSize(20);// texte ecran
+//textSize(20);// texte ecran
+textFont(policeMoniteur,20);
 fill(255);
 text("monitor 1", 155, 100);
 
-textSize(45);// texte machine on et off
+// texte machine on et off
+textFont(policeONOFF,45);
+//textSize(45);
 fill(65, 61, 60);
 text("ON", 122, 660); 
 text("OFF", 110, 800); 
@@ -117,6 +149,7 @@ text("OFF", 110, 800);
 
  
 }
+
 
 // Called every time a new frame is available to read
 void movieEvent(Movie m) {
