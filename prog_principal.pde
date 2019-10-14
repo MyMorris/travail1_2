@@ -3,39 +3,61 @@
 
 // images fixe machine,ecran,distributeur
 String file = "background photo.jpg";//  background 
- PImage img;// background
-PShape bouton;//SVG machine
+PImage img;// background
+PShape machine;//SVG machine
 PShape distributeur; //SVG distributeur
 PShape ecran; // SVG ecran de controle
+
+// video---------------------------
+import processing.video.*;
+Movie video;
+
 
 // images en mouvement ou animé------------------
 PShape chariot; // chariot
 //PShape boite;// boite
 //PShape boite support;// support 
 //PShape gyroscopeon; //gryroscope allume
-PShape gyroscopeoff;
-//PShape lumier rouge;
-//PShape lumiere verte
+PShape gyroscopeoff; // gyroscope eteind
+//PShape lumierrouge;//lumiére rouge
+PShape lumiereverte; //lumiére verte
+//PShape brasmecanique;// bras mecanique
 
 
 //------tapis roulant-------------------
-  PVector p3 = new PVector(200, 0, 00);
+PVector p3 = new PVector(200, 0, 00);
 PVector p4 = new PVector(800, 0, 00);
 
 //-----------------------------------------------------------------
 
 void setup() {
  size(1920,1080); // full hd
+ frameRate(30); // 30 images seconde
+ 
  
  // --------affichage image fixe-----------
- bouton = loadShape("bouton (1).svg");//SVG machine
+ machine = loadShape("machine.svg");//SVG machine
  distributeur = loadShape("distributeur.svg");//SVG distributeur
  ecran = loadShape("ecran.svg");//SVG ecran de controle
  
  //---------affichage image mouvement -------
  chariot= loadShape("chariot portique.svg");
- gyroscopeoff= loadShape("gyroscope off.svg");
+ 
+ //--------affichage image animé------------
+ lumiereverte= loadShape("lumiere verte.svg");// lumiere machine on
+// lumiererouge= loadShape("lumiere rouge.svg");// lumiere machine off
+ 
+ gyroscopeoff= loadShape("gyroscope off.svg"); 
 // gyroscopeon= loadShape("gyroscope on.svg");
+
+//--------affichage bras mecanique---------
+
+//brasmecanique= loadShape("bras mecanique");
+
+//----------affichage video--------------
+video = new Movie(this, "video surveillance.mov");
+video.frameRate(30);
+video.loop();
  }
  
  //----------------------------------------------------------------
@@ -47,7 +69,7 @@ imageMode(CORNER);//  background
 img= loadImage("background photo.jpg");
 image(img, 0, 0, width , height);//fin background
 
-shape(bouton, -450, 400, 1200, 800);//SVG machine
+shape(machine, -450, 400, 1200, 800);//SVG machine
  shape(distributeur,150,10,1500,900);//SVG distributeur
  shape(ecran,10,-350,700,700);// ecran de controle
  
@@ -58,19 +80,47 @@ shape(bouton, -450, 400, 1200, 800);//SVG machine
  
  //-------chariot portique-----
   fill (112,108,105);//couleur portique gris moonboard
-  rect (1200,510,750,60);// portique 
-  shape(chariot,900,500,850,200);// chariot du portique
+  rect (1200,480,750,60);// portique 
+  
+  shape(chariot,900,400,850,300);// chariot du portique
   
   //--------gyroscope-------
- 
   shape(gyroscopeoff,642,290,200,200);//gyroscope off
   //shape(gyroscopeon,642,290,200,200);//gyroscope on
   
+  //-------lumiére rouge-----------
+  shape(lumiereverte,64,483,200,150);//lumiére verte machine ouverte
+ // shape(lumiereverte,64,483,200,150);//lumiére rouge machine fermé
+ 
+ //---------animation bras mecanique-----
+ 
+// shape(brasmecanique,500,500,100,200);
+  
+  //-----------video-----------
+ 
+image(video, 150, 80,394,230);
+
+//-----------textes--------
+
+textSize(20);// texte ecran
+fill(255);
+text("monitor 1", 155, 100);
+
+textSize(45);// texte machine on et off
+fill(65, 61, 60);
+text("ON", 122, 660); 
+text("OFF", 110, 800); 
   
 //--------tapis roulant ----------------
   Pontroulant();
   AnimPontRoulant();
+
  
+}
+
+// Called every time a new frame is available to read
+void movieEvent(Movie m) {
+  m.read();
 }
 
 void Pontroulant() {
