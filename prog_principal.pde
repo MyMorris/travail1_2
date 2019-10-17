@@ -33,12 +33,17 @@ PVector p4 = new PVector(800, 0, 00);
 
 //-----------------------------------------------------------------
 
+//-------- Bouton on du tapis roulant ------
+boolean boutonOnOver = false;
+boolean boutonOffOver = true;
+
 void setup() {
 
  policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
  policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
  
  size(1920,1080); // full hd
+ //size(1025,780);
  img= loadImage("background_photo.jpg"); //load background-image 
  frameRate(30); // 30 images seconde
  
@@ -73,6 +78,7 @@ video.loop();
  
  void draw()
 {
+update(mouseX, mouseY);
 imageMode(CORNER);//  background
 
 tint(50);
@@ -145,9 +151,11 @@ text("OFF", 110, 800);
   
 //--------tapis roulant ----------------
   Pontroulant();
+  if (boutonOnOver){
   AnimPontRoulant();
+  }
+  else boutonOffOver=true;
 
- 
 }
 
 
@@ -170,6 +178,38 @@ void Pontroulant() {
   line(200, height / 20.0f, 800, height / 20.0f);
   line(200, -height / 20.0f, 800, -height / 20.0f);
 }
+ 
+ //----Bouton tapis roulant ---- 
+void update(int x, int y) {
+  if (boutonOnOver(150, 710, 50) ) {
+    boutonOnOver = true;
+  } else if ( boutonOffOver(150, 840, 50) ) {
+    boutonOnOver = false;
+  }
+  }
+ 
+boolean boutonOnOver(int x, int y, int diameter) {
+  float disX = x - mouseX;
+  float disY = y - mouseY;
+  if (sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
+    return true;
+  } else {
+    return false;
+  }
+ }
+ 
+ boolean boutonOffOver(int x, int y, int diameter) {
+  float disX = x - mouseX;
+  float disY = y - mouseY;
+  if (sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
+    return true;
+  } else {
+    return false;
+  }
+ }
+
+
+
 void AnimPontRoulant() {
   pushMatrix();
   translate(200, p3.y);
@@ -185,9 +225,3 @@ void AnimPontRoulant() {
 }
 
 // fin
-
-  
- 
-
-  
- 
