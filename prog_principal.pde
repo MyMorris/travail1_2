@@ -22,7 +22,7 @@ PShape chariot; // chariot
 //PShape boite support;// support 
 //PShape gyroscopeon; //gryroscope allume
 PShape gyroscopeoff; // gyroscope eteind
-//PShape lumierrouge;//lumiére rouge
+PShape lumiererouge;//lumiére rouge
 PShape lumiereverte; //lumiére verte
 PShape brasmecanique;// bras mecanique
 
@@ -59,7 +59,7 @@ void setup() {
  
  //--------affichage image animé------------
  lumiereverte= loadShape("lumiere verte.svg");// lumiere machine on
-// lumiererouge= loadShape("lumiere rouge.svg");// lumiere machine off
+ lumiererouge= loadShape("lumiere rouge.svg");// lumiere machine off
  
  gyroscopeoff= loadShape("gyroscope off.svg"); 
 // gyroscopeon= loadShape("gyroscope on.svg");
@@ -101,8 +101,8 @@ filter(GRAY);//fin background
   //shape(gyroscopeon,642,290,200,200);//gyroscope on
   
   //-------lumiére rouge-----------
-  shape(lumiereverte,64,483,200,150);//lumiére verte machine ouverte
- // shape(lumiereverte,64,483,200,150);//lumiére rouge machine fermé
+  //shape(lumiererouge,64,483,200,150);//lumiére rouge machine fermé
+  //shape(lumiereverte,64,483,200,150);//lumiére verte machine ouverte
  
  //---------animation bras mecanique-----
  
@@ -153,9 +153,10 @@ text("OFF", 110, 800);
   Pontroulant();
   if (boutonOnOver){
   AnimPontRoulant();
+  shape(lumiereverte,64,483,200,150);//lumiére verte machine ouverte
   }
-  else boutonOffOver=true;
-
+  else 
+  shape(lumiererouge,64,483,200,150);//lumiére rouge machine fermé
 }
 
 
