@@ -13,18 +13,22 @@ import processing.video.*;
 Movie video;
 
 // Police de caractère ----
-  PFont policeONOFF;
-  PFont policeMoniteur;
+PFont policeONOFF;
+PFont policeMoniteur;
   
 // images en mouvement ou animé------------------
 PShape chariot; // chariot
 //PShape boite;// boite
-//PShape boite support;// support 
+PShape boitesupport;// support 
 //PShape gyroscopeon; //gryroscope allume
 PShape gyroscopeoff; // gyroscope eteind
 PShape lumiererouge;//lumiére rouge
 PShape lumiereverte; //lumiére verte
 PShape brasmecanique;// bras mecanique
+float x;
+float y;
+float vitesseX;
+float vitesseY;
 
 
 //------tapis roulant-------------------
@@ -38,57 +42,58 @@ boolean boutonOnOver = false;
 boolean boutonOffOver = true;
 
 void setup() {
+  x=-355;
+  y=-80;
+  vitesseX=20;
+  policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
+  policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
+  size(1920,1080); // full hd
+  img= loadImage("background_photo.jpg"); //load background-image 
+  frameRate(30); // 30 images seconde
+  
+  // --------affichage image fixe-----------
+  machine = loadShape("machine.svg");//SVG machine
+  distributeur = loadShape("distributeur.svg");//SVG distributeur
+  ecran = loadShape("ecran.svg");//SVG ecran de controle
+  
+  //---------affichage image mouvement -------
+  chariot= loadShape("chariot portique.svg");
+  boitesupport= loadShape("boite support.svg");
+  
+  //--------affichage image animé------------
+  lumiereverte= loadShape("lumiere verte.svg");// lumiere machine on
+  lumiererouge= loadShape("lumiere rouge.svg");// lumiere machine off
+ 
+  gyroscopeoff= loadShape("gyroscope off.svg"); 
+  // gyroscopeon= loadShape("gyroscope on.svg");
 
- policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
- policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
- 
- size(1920,1080); // full hd
- //size(1025,780);
- img= loadImage("background_photo.jpg"); //load background-image 
- frameRate(30); // 30 images seconde
- 
- 
- // --------affichage image fixe-----------
- machine = loadShape("machine.svg");//SVG machine
+  //--------affichage bras mecanique---------
+  brasmecanique= loadShape("bras mecanique.svg");
 
- distributeur = loadShape("distributeur.svg");//SVG distributeur
- ecran = loadShape("ecran.svg");//SVG ecran de controle
- 
- //---------affichage image mouvement -------
- chariot= loadShape("chariot portique.svg");
- 
- //--------affichage image animé------------
- lumiereverte= loadShape("lumiere verte.svg");// lumiere machine on
- lumiererouge= loadShape("lumiere rouge.svg");// lumiere machine off
- 
- gyroscopeoff= loadShape("gyroscope off.svg"); 
-// gyroscopeon= loadShape("gyroscope on.svg");
-
-//--------affichage bras mecanique---------
-
-brasmecanique= loadShape("bras mecanique.svg");
-
-//----------affichage video--------------
-video = new Movie(this, "video surveillance.mov");
-video.frameRate(30);
-video.loop();
+  //----------affichage video--------------
+  video = new Movie(this, "video surveillance.mov");
+  video.frameRate(30);
+  video.loop();
  }
  
- //----------------------------------------------------------------
  
- void draw()
-{
-update(mouseX, mouseY);
-imageMode(CORNER);//  background
-
-tint(50);
-image(img, 0, 0, width , height);
-filter(GRAY);//fin background
+ void draw() {
+   update(mouseX, mouseY);
+   imageMode(CORNER);//  background
+   tint(50);
+   image(img, 0, 0, width , height);
+   filter(GRAY);//fin background
 
  //-------support avant et arriere tapis roulant
  fill (74,187,183);// couleur bleu moodboard
  rect (1250,900,150,100);// support arriere
  rect (387,900,130,100); // support avant
+    
+    //---- boites A ANIMER ----
+ // shape(boitesupport,-110,730,850,300);
+
+  //----- Machine -------
+ shape(machine, -450, 400, 1200, 800);
  
  //-------chariot portique-----
   fill (112,108,105);//couleur portique gris moonboard
@@ -99,17 +104,14 @@ filter(GRAY);//fin background
   //--------gyroscope-------
   shape(gyroscopeoff,642,290,200,200);//gyroscope off
   //shape(gyroscopeon,642,290,200,200);//gyroscope on
-  
-  //-------lumiére rouge-----------
-  //shape(lumiererouge,64,483,200,150);//lumiére rouge machine fermé
-  //shape(lumiereverte,64,483,200,150);//lumiére verte machine ouverte
+ 
  
  //---------animation bras mecanique-----
  
  shape(brasmecanique,309,100,1200,1400);
  
- //----- Machine -------
- shape(machine, -450, 400, 1200, 800);
+
+
  //-------- Distributeur -----
  shape(distributeur,150,10,1500,900);
  //-------- Écran de controle -------
@@ -131,9 +133,11 @@ image(video, 150, 80,394,230);
   stroke(#000000);
   strokeWeight(0.5);
   fill(112,108,105);
-    triangle(1288,535,1255,550,1288,565);
+  triangle(1288,535,1255,550,1288,565);
   triangle(1358,535,1391,550,1358,565);
   //noStroke();
+  
+
 
 //-----------textes--------
 
@@ -144,7 +148,6 @@ text("monitor 1", 155, 100);
 
 // texte machine on et off
 textFont(policeONOFF,45);
-//textSize(45);
 fill(65, 61, 60);
 text("ON", 122, 660); 
 text("OFF", 110, 800); 
@@ -153,12 +156,23 @@ text("OFF", 110, 800);
   Pontroulant();
   if (boutonOnOver){
   AnimPontRoulant();
-  shape(lumiereverte,64,483,200,150);//lumiére verte machine ouverte
+  shape(lumiereverte,-315,467,200,-150);//lumiére verte machine ouverte
+  shape(boitesupport,x,y,850,300);
+  if (x<=510){
+  bouge();
   }
-  else 
-  shape(lumiererouge,64,483,200,150);//lumiére rouge machine fermé
+  }
+  else {
+  shape(lumiererouge,-315,467,200,-150);//lumiére rouge machine fermé
+  shape(boitesupport,x,y,850,300);
+  }
 }
 
+
+void bouge(){
+  x=x+vitesseX;
+  
+}
 
 // Called every time a new frame is available to read
 void movieEvent(Movie m) {
@@ -175,7 +189,7 @@ void Pontroulant() {
   stroke(74, 74, 74);
   if (frameCount % 2 == 0)
     //position moteur 1
-    fill(224, 224, 224);
+  fill(224, 224, 224);
   line(200, height / 20.0f, 800, height / 20.0f);
   line(200, -height / 20.0f, 800, -height / 20.0f);
 }
@@ -208,8 +222,6 @@ boolean boutonOnOver(int x, int y, int diameter) {
     return false;
   }
  }
-
-
 
 void AnimPontRoulant() {
   pushMatrix();
