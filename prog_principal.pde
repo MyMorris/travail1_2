@@ -116,9 +116,14 @@ void setup() {
   shape(chariot,900,400,850,300);// chariot du portique
   
   //--------gyroscope-------
-  shape(gyroscopeoff,642,290,200,200);//gyroscope off
-  //shape(gyroscopeon,642,290,200,200);//gyroscope on
- 
+  shape(gyroscopeon,642,290,200,200);//gyroscope on
+ tmpo= tmpo+1;
+ if (tmpo==2){
+shape(gyroscopeoff,642,290,200,200);//gyroscope off
+ }
+if (tmpo ==3) {
+tmpo=0;//+++++++++++++++++++
+ }
  
  //---------animation bras mecanique-----
  
