@@ -20,7 +20,7 @@ PFont policeMoniteur;
 PShape chariot; // chariot
 //PShape boite;// boite
 PShape boitesupport;// support 
-//PShape gyroscopeon; //gryroscope allume
+PShape gyroscopeon; //gryroscope allume
 PShape gyroscopeoff; // gyroscope eteind
 PShape lumiererouge;//lumiére rouge
 PShape lumiereverte; //lumiére verte
@@ -29,6 +29,7 @@ float x;
 float y;
 float vitesseX;
 float vitesseY;
+float tmpo;
 
 // audio-----
 import ddf.minim.*;//************************
@@ -53,6 +54,7 @@ void setup() {
   x=-355;
   y=-80;
   vitesseX=20;
+  tmpo=0;
   policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
   policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
   size(1920,1080); // full hd
@@ -73,7 +75,7 @@ void setup() {
   lumiererouge= loadShape("lumiere rouge.svg");// lumiere machine off
  
   gyroscopeoff= loadShape("gyroscope off.svg"); 
-  // gyroscopeon= loadShape("gyroscope on.svg");
+  gyroscopeon= loadShape("gyroscope on.svg");
 
   //--------affichage bras mecanique---------
   brasmecanique= loadShape("bras mecanique.svg");
