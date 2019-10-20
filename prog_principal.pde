@@ -45,12 +45,12 @@ PVector p3 = new PVector(200, 0, 00);
 PVector p4 = new PVector(800, 0, 00);
 
 //-----------------------------------------------------------------
-
 //-------- Bouton on du tapis roulant ------
 boolean boutonOnOver = false;
 boolean boutonOffOver = true;
-
+int tmpo;//++++++++++++++++++++++++++++++++++++++++
 void setup() {
+  
   x=-355;
   y=-80;
   vitesseX=20;
