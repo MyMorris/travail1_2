@@ -30,6 +30,14 @@ float y;
 float vitesseX;
 float vitesseY;
 
+// audio-----
+import ddf.minim.*;//************************
+
+Minim minim;//**************************
+AudioSample machineon;//**************************
+AudioSample bruitagetapis;//***********************
+AudioSample bruitagemachine;//*********************
+
 
 //------tapis roulant-------------------
 PVector p3 = new PVector(200, 0, 00);
@@ -74,6 +82,12 @@ void setup() {
   video = new Movie(this, "video surveillance.mov");
   video.frameRate(30);
   video.loop();
+    // audio-------------------
+   minim = new Minim(this);//********************************************
+ machineon = minim.loadSample("bruitagemachine.mp3");//************************************
+ bruitagetapis = minim.loadSample("bruitagetapis.mp3");//************************************
+ bruitagemachine = minim.loadSample("grincement.wav");//************************************
+
  }
  
  
@@ -156,6 +170,11 @@ text("OFF", 110, 800);
   Pontroulant();
   if (boutonOnOver){
   AnimPontRoulant();
+  // audio
+   machineon.trigger();//*****************************************
+  bruitagetapis.trigger();//*****************************************
+  bruitagemachine.trigger();//*****************************************
+  
   shape(lumiereverte,-315,467,200,-150);//lumiére verte machine ouverte
   shape(boitesupport,x,y,850,300);
   if (x<=510){
@@ -164,7 +183,12 @@ text("OFF", 110, 800);
   }
   else {
   shape(lumiererouge,-315,467,200,-150);//lumiére rouge machine fermé
-  shape(boitesupport,x,y,850,300);
+    // audio off
+ machineon.stop();//*****************************************************
+ bruitagetapis.stop();//**************************************************
+ bruitagemachine.stop();//********************************
+
+shape(boitesupport,x,y,850,300);
   }
 }
 
