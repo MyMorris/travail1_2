@@ -1,4 +1,4 @@
-// TP1 prog principal 2019
+/ TP1 prog principal 2019
 // Nancy Dodier, Jean-Philippe Dufour, David Martin Pierre Sévigny
 
 // images fixe machine,ecran,distributeur
@@ -18,8 +18,8 @@ PFont policeMoniteur;
   
 // images en mouvement ou animé------------------
 PShape chariot; // chariot
-//PShape boite;// boite
-PShape boitesupport;// support 
+PShape boite;// boite+
+//PShape boitesupport;// support 
 PShape gyroscopeon; //gryroscope allume
 PShape gyroscopeoff; // gyroscope eteind
 PShape lumiererouge;//lumiére rouge
@@ -29,7 +29,6 @@ float x;
 float y;
 float vitesseX;
 float vitesseY;
-float tmpo;
 
 // audio-----
 import ddf.minim.*;//************************
@@ -38,27 +37,28 @@ Minim minim;//**************************
 AudioSample machineon;//**************************
 AudioSample bruitagetapis;//***********************
 AudioSample bruitagemachine;//*********************
-
-
+AudioSample bruitsourd;//**********************
 //------tapis roulant-------------------
 PVector p3 = new PVector(200, 0, 00);
 PVector p4 = new PVector(800, 0, 00);
 
 //-----------------------------------------------------------------
+
 //-------- Bouton on du tapis roulant ------
 boolean boutonOnOver = false;
 boolean boutonOffOver = true;
+
 int tmpo;//++++++++++++++++++++++++++++++++++++++++
+
 void setup() {
-  
-  x=-355;
-  y=-80;
+  tmpo = 0;//++++++++++++++++++++++++++++++++++++++
+  x=-50;
+  y=-20;
   vitesseX=20;
-  tmpo=0;
   policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
   policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
   size(1920,1080); // full hd
-  img= loadImage("background_photo.jpg"); //load background-image 
+  img= loadImage("background photo.jpg"); //load background-image 
   frameRate(30); // 30 images seconde
   
   // --------affichage image fixe-----------
@@ -68,8 +68,8 @@ void setup() {
   
   //---------affichage image mouvement -------
   chariot= loadShape("chariot portique.svg");
-  boitesupport= loadShape("boite support.svg");
-  
+ //boitesupport= loadShape("boite support.svg");
+  boite= loadShape("boite.svg");//+
   //--------affichage image animé------------
   lumiereverte= loadShape("lumiere verte.svg");// lumiere machine on
   lumiererouge= loadShape("lumiere rouge.svg");// lumiere machine off
@@ -84,32 +84,34 @@ void setup() {
   video = new Movie(this, "video surveillance.mov");
   video.frameRate(30);
   video.loop();
-    // audio-------------------
+  // audio-------------------
    minim = new Minim(this);//********************************************
  machineon = minim.loadSample("bruitagemachine.mp3");//************************************
  bruitagetapis = minim.loadSample("bruitagetapis.mp3");//************************************
  bruitagemachine = minim.loadSample("grincement.wav");//************************************
-
+bruitsourd = minim.loadSample("bruitsourd.mp3");//***********************************
  }
  
  
  void draw() {
    update(mouseX, mouseY);
    imageMode(CORNER);//  background
-   tint(50);
+ tint(90);
    image(img, 0, 0, width , height);
-   filter(GRAY);//fin background
+// filter(GRAY);//fin background
 
  //-------support avant et arriere tapis roulant
  fill (74,187,183);// couleur bleu moodboard
  rect (1250,900,150,100);// support arriere
  rect (387,900,130,100); // support avant
-    
+  
     //---- boites A ANIMER ----
  // shape(boitesupport,-110,730,850,300);
-
-  //----- Machine -------
+ //----- Machine -------
  shape(machine, -450, 400, 1200, 800);
+ //-------- animation bras mecanique chariot
+
+shape(brasmecanique,345,320,2000,1000);
  
  //-------chariot portique-----
   fill (112,108,105);//couleur portique gris moonboard
@@ -118,7 +120,7 @@ void setup() {
   shape(chariot,900,400,850,300);// chariot du portique
   
   //--------gyroscope-------
-  shape(gyroscopeon,642,290,200,200);//gyroscope on
+ shape(gyroscopeon,642,290,200,200);//gyroscope on
  tmpo= tmpo+1;
  if (tmpo==2){
 shape(gyroscopeoff,642,290,200,200);//gyroscope off
@@ -126,15 +128,21 @@ shape(gyroscopeoff,642,290,200,200);//gyroscope off
 if (tmpo ==3) {
 tmpo=0;//+++++++++++++++++++
  }
+//if (tempo==120) {
+ // tempo =0;
+//}
  
- //---------animation bras mecanique-----
+ //---------animation bras mecanique distributeur
+
  
  shape(brasmecanique,309,100,1200,1400);
  
 
-
  //-------- Distributeur -----
  shape(distributeur,150,10,1500,900);
+ fill(238,81,72);
+ circle (1052,380,30);
+
  //-------- Écran de controle -------
  shape(ecran,10,-350,700,700);
   
@@ -178,27 +186,30 @@ text("OFF", 110, 800);
   if (boutonOnOver){
   AnimPontRoulant();
   // audio
-   machineon.trigger();//*****************************************
+  machineon.trigger();//*****************************************
   bruitagetapis.trigger();//*****************************************
   bruitagemachine.trigger();//*****************************************
-  
   shape(lumiereverte,-315,467,200,-150);//lumiére verte machine ouverte
-  shape(boitesupport,x,y,850,300);
-  if (x<=510){
+  shape(boite,x,y,250,250);
+  if (x<=800){
   bouge();
+  
   }
   }
   else {
   shape(lumiererouge,-315,467,200,-150);//lumiére rouge machine fermé
-    // audio off
+  // audio off
  machineon.stop();//*****************************************************
  bruitagetapis.stop();//**************************************************
  bruitagemachine.stop();//********************************
 
-shape(boitesupport,x,y,850,300);
+  shape(boite,x,y,250,250);
+  
   }
+  if (x==790){ 
+   bruitsourd.trigger();//*****************************************
 }
-
+}
 
 void bouge(){
   x=x+vitesseX;
@@ -249,6 +260,8 @@ boolean boutonOnOver(int x, int y, int diameter) {
   float disY = y - mouseY;
   if (sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
     return true;
+    
+ 
   } else {
     return false;
   }
