@@ -1,8 +1,8 @@
-/ TP1 prog principal 2019
+// TP1 prog principal 2019
 // Nancy Dodier, Jean-Philippe Dufour, David Martin Pierre Sévigny
 
 // images fixe machine,ecran,distributeur
-String file = "background photo.jpg";//  background 
+String file = "background Photo.jpg";//  background 
 PImage img;// background
 PShape machine;//SVG machine
 PShape distributeur; //SVG distributeur
@@ -58,7 +58,7 @@ void setup() {
   policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
   policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
   size(1920,1080); // full hd
-  img= loadImage("background photo.jpg"); //load background-image 
+  img= loadImage("backgroundPhoto.jpg"); //load background-image 
   frameRate(30); // 30 images seconde
   
   // --------affichage image fixe-----------
@@ -86,8 +86,8 @@ void setup() {
   video.loop();
   // audio-------------------
    minim = new Minim(this);//********************************************
- machineon = minim.loadSample("bruitagemachine.mp3");//************************************
- bruitagetapis = minim.loadSample("bruitagetapis.mp3");//************************************
+ machineon = minim.loadSample("bruitagemachine.wav");//************************************
+ bruitagetapis = minim.loadSample("bruitagetapis.wav");//************************************
  bruitagemachine = minim.loadSample("grincement.wav");//************************************
 bruitsourd = minim.loadSample("bruitsourd.mp3");//***********************************
  }
@@ -96,7 +96,7 @@ bruitsourd = minim.loadSample("bruitsourd.mp3");//******************************
  void draw() {
    update(mouseX, mouseY);
    imageMode(CORNER);//  background
- tint(90);
+   tint(90);
    image(img, 0, 0, width , height);
 // filter(GRAY);//fin background
 
@@ -141,7 +141,7 @@ tmpo=0;//+++++++++++++++++++
  //-------- Distributeur -----
  shape(distributeur,150,10,1500,900);
  fill(238,81,72);
- circle (1052,380,30);
+ //circle (1052,380,30);
 
  //-------- Écran de controle -------
  shape(ecran,10,-350,700,700);
