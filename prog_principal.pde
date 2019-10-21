@@ -15,6 +15,7 @@ Movie video;
 // Police de caractère ----
 PFont policeONOFF;
 PFont policeMoniteur;
+PFont f;
   
 // images en mouvement ou animé------------------
 PShape chariot; // chariot
@@ -58,7 +59,7 @@ void setup() {
   policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
   policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
   size(1920,1080); // full hd
-  img= loadImage("backgroundPhoto.jpg"); //load background-image 
+  img= loadImage("background_photo.jpg"); //load background-image 
   frameRate(30); // 30 images seconde
   
   // --------affichage image fixe-----------
@@ -90,6 +91,7 @@ void setup() {
  bruitagetapis = minim.loadSample("bruitagetapis.wav");//************************************
  bruitagemachine = minim.loadSample("grincement.wav");//************************************
 bruitsourd = minim.loadSample("bruitsourd.mp3");//***********************************
+f=createFont("Lato-Regular.ttf",20);
  }
  
  
@@ -98,6 +100,7 @@ bruitsourd = minim.loadSample("bruitsourd.mp3");//******************************
    imageMode(CORNER);//  background
    tint(90);
    image(img, 0, 0, width , height);
+   
 // filter(GRAY);//fin background
 
  //-------support avant et arriere tapis roulant
@@ -169,7 +172,15 @@ image(video, 150, 80,394,230);
 
 
 //-----------textes--------
-
+textFont(f);
+fill(#FFD52E);
+text("Production #", width/1.5f, height/1.155f);
+textFont(f);
+fill(#E82D2C);
+text("BY40125",width / 1.5f, height / 1.125f); 
+     if(keyPressed) 
+       fill(#FFD52E);
+      text("APPROUVÉE",width / 1.52f, height / 1.085f);
 //textSize(20);// texte ecran
 textFont(policeMoniteur,20);
 fill(255);
@@ -191,10 +202,18 @@ text("OFF", 110, 800);
   bruitagemachine.trigger();//*****************************************
   shape(lumiereverte,-315,467,200,-150);//lumiére verte machine ouverte
   shape(boite,x,y,250,250);
-  if (x<=800){
-  bouge();
-  
-  }
+    if (x<=800){
+     bouge();
+
+      }
+      if (x==790){ 
+   bruitsourd.trigger();//*****************************************
+}
+if (x==810){
+ if (keyCode == DOWN){
+ println(x+ "down");
+ }
+}
   }
   else {
   shape(lumiererouge,-315,467,200,-150);//lumiére rouge machine fermé
@@ -202,13 +221,11 @@ text("OFF", 110, 800);
  machineon.stop();//*****************************************************
  bruitagetapis.stop();//**************************************************
  bruitagemachine.stop();//********************************
-
-  shape(boite,x,y,250,250);
-  
+  shape(boite,x,y,250,250);  
   }
-  if (x==790){ 
-   bruitsourd.trigger();//*****************************************
-}
+  
+
+
 }
 
 void bouge(){
