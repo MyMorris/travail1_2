@@ -29,10 +29,12 @@ PShape brasmecanique;// bras mecanique
 
 //Boite
 PShape boite;// boite+
-PVector currentPosBoite = new PVector(340,725);
-PVector posBoite = new PVector(340,725);
+PVector orgPosBoite = new PVector(340, 732);
+PVector currentPosBoite = new PVector(340, 732);
 float vitesseX;
-float vitesseY;
+float orgVitesseY = 2;
+float currentVitesseY;
+boolean brasCanMoveBox = false;
 
 // audio-----
 import ddf.minim.*;//************************
@@ -44,50 +46,55 @@ AudioSample bruitagemachine;//*********************
 AudioSample bruitsourd;//**********************
 
 
+
 //------tapis roulant-------------------
-PVector p3 = new PVector(580,-950, 00);
-PVector p4 = new PVector(1180,-950, 00);
+//-----------------------------------------------------------------
+PVector p3 = new PVector(580, -950, 00);
+PVector p4 = new PVector(1180, -950, 00);
 boolean tapisIsOn = false;
 int speed;
 
-//-----------------------------------------------------------------
-
-
-//Bouton variable
+//Bouton tapis roulant
 PVector boutonOnPos =  new PVector(150, 710, 00);
 PVector boutonOffPos = new PVector(150, 840, 00);
 PVector boutonSize =   new PVector (50, 60, 00);
 PVector boutonActivePos = boutonOnPos;
-color greenButon = color(0,255,0);
-color redButon =   color(100,0,0);
+color greenButon = color(0, 255, 0);
+color redButon =   color(100, 0, 0);
 
 
-//Bouton Bras Mechanique
-PVector triangleOneX = new PVector(1288,1255,1288);
-PVector triangleY = new PVector(535,550,565);
-PVector triangleTwoX = new PVector(1358,1391,1358);
-PVector triangleSize = new PVector(triangleOneX.x-triangleOneX.y,triangleY.z-triangleY.x);
-PVector redRectPos = new PVector(triangleOneX.x,triangleY.z);
-PVector redRectSize = new PVector(triangleTwoX.x - triangleOneX.z,triangleY.x - triangleY.z);
 
 //BrasMechanique
-PVector brasPos = new PVector(345,320);
-PVector brasSize = new PVector(2000,900);
-PVector chariotPos = new PVector(900,400);
-PVector chariotSize = new PVector(850,300);
-float chariotOrgPos;
+//-----------------------------------------------------------------
+//Bouton Bras Mechanique
+PVector triangleOneX = new PVector(1288, 1255, 1288);
+PVector triangleY = new PVector(535, 550, 565);
+PVector triangleTwoX = new PVector(1358, 1391, 1358);
+PVector triangleSize = new PVector(triangleOneX.x-triangleOneX.y, triangleY.z-triangleY.x);
+PVector redRectPos = new PVector(triangleOneX.x, triangleY.z);
+PVector redRectSize = new PVector(triangleTwoX.x - triangleOneX.z, triangleY.x - triangleY.z);
+
+//BrasMechanique Position et autre
+PVector brasPos = new PVector(345, 320);
+PVector brasSize = new PVector(2000, 900);
+PVector chariotPos = new PVector(900, 400);
+PVector chariotSize = new PVector(850, 300);
+float chariotOrgPosX;
 float brasMove = 0;
+float brasMoveSpeed = 10;
+boolean dropTheBox = false;
 //PVector tringleTwoY = new PVector(535,550,565);
 /*triangle(1288, 535, 1255, 550, 1288, 565);
-  triangle(1358, 535, 1391, 550, 1358, 565);*/
+ triangle(1358, 535, 1391, 550, 1358, 565);*/
 
 int tmpo;//++++++++++++++++++++++++++++++++++++++++
 
 void setup() {
   tmpo = 0;//++++++++++++++++++++++++++++++++++++++
-
+  currentVitesseY = orgVitesseY;
   vitesseX=20;
-  chariotOrgPos = chariotPos.x;
+  chariotOrgPosX = chariotPos.x;
+  
   policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
   policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
   size(1920, 1080); // full hd
@@ -150,10 +157,10 @@ void draw() {
   //shape(brasmecanique, 345, 320, 2000, 1000);
 
   //-------chariot portique-----
-  /*fill (112, 108, 105);//couleur portique gris moonboard
+  //fill (112, 108, 105);//couleur portique gris moonboard
   rect (1200, 480, 750, 60);// portique 
 
-  shape(chariot, 900, 400, 850, 300);// chariot du portique*/
+  //shape(chariot, 900, 400, 850, 300);// chariot du portique
 
   //--------gyroscope-------
   shape(gyroscopeon, 642, 290, 200, 200);//gyroscope on
@@ -196,11 +203,11 @@ void draw() {
 
   // ---- boutons avance-recule du chariot porticle ---
   /*stroke(#000000);
-  strokeWeight(0.5);
-  fill(112, 108, 105);
-  triangle(1288, 535, 1255, 550, 1288, 565);
-  triangle(1358, 535, 1391, 550, 1358, 565);
-  //noStroke();*/
+   strokeWeight(0.5);
+   fill(112, 108, 105);
+   triangle(1288, 535, 1255, 550, 1288, 565);
+   triangle(1358, 535, 1391, 550, 1358, 565);
+   //noStroke();*/
 
 
 
@@ -221,17 +228,17 @@ void draw() {
 
   // texte machine on et off
   /*textFont(policeONOFF, 45);
-  fill(65, 61, 60);
-  text("ON", 122, 660); 
-  text("OFF", 110, 800); */
+   fill(65, 61, 60);
+   text("ON", 122, 660); 
+   text("OFF", 110, 800); */
   popMatrix();
+  Boite();
   BrasMechanique();
   //BoutonBrasMechanique();
   //--------tapis roulant ----------------
   Pontroulant();
   BoutonOnOff();
   LumiereMarche();
-  Boite();
 }
 
 
@@ -250,16 +257,44 @@ void movieEvent(Movie m) {
 void Boite()
 {
   pushMatrix();
-  shape(boite, currentPosBoite.x, posBoite.y, 250, 250);
+  shape(boite, currentPosBoite.x, currentPosBoite.y, 250, 250);
   BoiteMouvement();
   popMatrix();
 }
 
 void BoiteMouvement() 
 {
-  if(currentPosBoite.x <= 1200 && tapisIsOn)
+  if (dropTheBox)
   {
-    currentPosBoite.x += vitesseX;
+    if(currentPosBoite.y < 2000)
+    {
+      brasCanMoveBox = false;
+      currentVitesseY += currentVitesseY /3.00f;
+      currentPosBoite.y += currentVitesseY;
+    }
+    else
+    {
+      currentVitesseY = orgVitesseY;
+      currentPosBoite.y = orgPosBoite.y;
+      currentPosBoite.x = orgPosBoite.x;
+      dropTheBox = false;
+    }
+  } else
+  {
+    if (currentPosBoite.x <= 1180 && tapisIsOn)
+    {
+      currentPosBoite.x += vitesseX;
+    }else if (brasCanMoveBox)
+    {
+      currentPosBoite.x += brasMove;
+    } else if (currentPosBoite.x >= 1180 && chariotPos.x <= chariotOrgPosX)
+    {
+      brasCanMoveBox = true;
+      currentPosBoite.x += brasMove;
+    } else if (currentPosBoite.x <= 1180 && chariotPos.x >= chariotOrgPosX)
+    {
+      brasCanMoveBox = false;
+    }
   }
 }
 
@@ -279,24 +314,23 @@ void Pontroulant()
   if (frameCount % 2 == 0)
   {
     //position moteur 1
-   
   }
   line(p3.x, p3.y + (height / 20.0f), p4.x, p3.y + (height / 20.0f));
   line(p3.x, p3.y - (height / 20.0f), p4.x, p3.y - (height / 20.0f));
   AnimPontRoulant();
 }
 void AnimPontRoulant() {
-  
+
   int speed = 0;
-  if(tapisIsOn && speed != 30)
+  if (tapisIsOn && speed != 30)
   {
     speed = 30;
-  }else
+  } else
   {
     speed = 0;
   }
-  Moteur(p3.x,speed);
-  Moteur(p4.x,speed);
+  Moteur(p3.x, speed);
+  Moteur(p4.x, speed);
   popMatrix();
 }
 
@@ -310,22 +344,15 @@ void Moteur(float x, float speed)
   popMatrix();
 }
 
-
-
-//
-//
-//----Bouton tapis roulant ---- 
-
-
 void BoutonOnOff()
 {
   pushMatrix();
-  textFont(policeONOFF,45);
+  textFont(policeONOFF, 45);
   textSize(45);
   fill(65, 61, 60);
   text("ON", boutonOnPos.x-boutonSize.x/5, 660); 
   text("OFF", boutonOnPos.x-boutonSize.x/4, 800); 
-  
+
   stroke(0, 0, 0);
   fill(greenButon);
   ellipse(boutonOnPos.x, boutonOnPos.y, boutonSize.x, boutonSize.y);
@@ -337,12 +364,12 @@ void BoutonOnOff()
 void LumiereMarche()
 {
   pushMatrix();
-  if(tapisIsOn)
+  if (tapisIsOn)
   {
     shape(lumiereverte, 65, 480, 200, 150);//lumiére verte machine ouverte
-  }else
+  } else
   { 
-    shape(lumiererouge, 65, 480, 200, 150);//lumiére rouge machine fermé 
+    shape(lumiererouge, 65, 480, 200, 150);//lumiére rouge machine fermé
   }
   popMatrix();
 }
@@ -350,19 +377,20 @@ void LumiereMarche()
 
 //
 //
-//
+//BrasMechanique
 void BoutonBrasMechanique()
 {
   pushMatrix();
   stroke(#000000);
   strokeWeight(2);
   fill(112, 108, 105);
-  triangleOneX = NewBoutonPosAfterMove(triangleOneX,brasMove);
-  triangleTwoX = NewBoutonPosAfterMove(triangleTwoX,brasMove);
+  triangleOneX = NewBoutonPosAfterMove(triangleOneX, brasMove);
+  triangleTwoX = NewBoutonPosAfterMove(triangleTwoX, brasMove);
   triangle(triangleOneX.x, triangleY.x, triangleOneX.y, triangleY.y, triangleOneX.z, triangleY.z);
   triangle(triangleTwoX.x, triangleY.x, triangleTwoX.y, triangleY.y, triangleTwoX.z, triangleY.z);
-  fill(200,0,0);
-  rect(triangleOneX.x,triangleY.z,triangleTwoX.x - triangleOneX.z,triangleY.x - triangleY.z);
+  fill(200, 0, 0);
+  redRectPos.x = triangleOneX.z;
+  rect(redRectPos.x, redRectPos.y, redRectSize.x, redRectSize.y);
   popMatrix();
   //noStroke();
 }
@@ -371,14 +399,13 @@ void BrasMechanique()
 {
   //-------- animation bras mecanique chariot
   pushMatrix();
-  
+
   brasPos.x += brasMove;
   chariotPos.x += brasMove;
-  shape(brasmecanique, brasPos.x, brasPos.y, brasSize.x, brasSize.y);
+  shape(brasmecanique, brasPos.x, brasPos.y + 52, brasSize.x, brasSize.y);
   shape(chariot, chariotPos.x, chariotPos.y, chariotSize.x, chariotSize.y);// chariot du portique
   BoutonBrasMechanique();
-  //brasMove = 0;
-  if(chariotPos.x >= 1400 || chariotPos.x <= chariotOrgPos)
+  if (chariotPos.x >= 1400 || chariotPos.x <= chariotOrgPosX)
   {
     brasMove = 0;
   }
@@ -399,97 +426,113 @@ PVector NewBoutonPosAfterMove(PVector baseVector, float moveValue)
 // Controle
 void mousePressed()
 {
-  if(mouseButton == LEFT && MouseSquareCollider(boutonActivePos,boutonSize))
+  if (mouseButton == LEFT && MouseSquareCollider(boutonActivePos, boutonSize))
   {
     tapisIsOn = !tapisIsOn;
-    if(boutonActivePos == boutonOnPos)
+    if (boutonActivePos == boutonOnPos)
     {
       boutonActivePos = boutonOffPos;
-      redButon = color(255,0,0);
-      greenButon = color(0,100,0);
+      redButon = color(255, 0, 0);
+      greenButon = color(0, 100, 0);
       machineon.trigger();//*****************************************
       bruitagetapis.trigger();//*****************************************
       bruitagemachine.trigger();//*****************************************
-      
-    }else
+    } else
     {
       boutonActivePos = boutonOnPos;
-      redButon = color(100,0,0);
-      greenButon = color(0,255,0);
+      redButon = color(100, 0, 0);
+      greenButon = color(0, 255, 0);
       machineon.stop();//*****************************************************
       bruitagetapis.stop();//**************************************************
       bruitagemachine.stop();//********************************
-      
     }
   }
-  
-  if(mouseButton == LEFT  && MouseSquareCollider(new PVector(triangleOneX.x - 16,triangleY.z - 15),triangleSize))
+
+  if (mouseButton == LEFT  && MouseSquareCollider(new PVector(triangleOneX.x - 16, triangleY.z - 15), triangleSize))
   {
-    if(brasMove != -15 && chariotPos.x > chariotOrgPos)
+    if (brasMove != -15 && chariotPos.x > chariotOrgPosX)
     {
-      brasMove = -15;
+      brasMove = -brasMoveSpeed;
     }
-  }
-  if(mouseButton == LEFT && MouseSquareCollider(new PVector(triangleTwoX.y - 16,triangleY.z - 15),triangleSize))
+  } else if (mouseButton == LEFT && MouseSquareCollider(new PVector(triangleTwoX.y - 16, triangleY.z - 15), triangleSize))
   {
-    if(brasMove != 15 && chariotPos.x < 1400)
+    if (brasMove != 15 && chariotPos.x < 1400)
     {
-      brasMove = 15;
+      brasMove = brasMoveSpeed;
     }
+  } else if (mouseButton == LEFT  && RedButonCollider(redRectPos, redRectSize))
+  {
+    brasMove = 0;
     
-  }
-  print(triangleOneX.z + redRectSize.x/2);
-  if(mouseButton == LEFT  && MouseSquareCollider(new PVector(triangleOneX.z + redRectSize.x/2 ,triangleY.x + redRectSize.y / 2),redRectSize))
-  {
-    print("work");
+    if (chariotPos.x >= 1400 && brasCanMoveBox)
+    {
+      dropTheBox = true;
+      brasCanMoveBox = false;
+    }
   }
 }
 
-
-boolean MouseSquareCollider(PVector basePos,PVector size)
+//
+//
+//Detection si la souris est dans une zone interactif
+boolean MouseSquareCollider(PVector basePos, PVector size)
 {
-  if(mouseX >= basePos.x - size.x/2 &&
-     mouseX <= basePos.x + size.x/2 &&
-     mouseY <= basePos.y + size.y/2 &&
-     mouseY >= basePos.y - size.y/2)
- {
-   return true;
- }
- else{ return false;}
+  if (mouseX >= basePos.x - size.x/2 &&
+    mouseX <= basePos.x + size.x/2 &&
+    mouseY <= basePos.y + size.y/2 &&
+    mouseY >= basePos.y - size.y/2)
+  {
+    return true;
+  } else { 
+    return false;
+  }
+}
+
+boolean RedButonCollider(PVector basePos, PVector size)
+{
+  if (mouseX >= basePos.x &&
+    mouseX <= basePos.x + size.x &&
+    mouseY >= basePos.y + size.y &&
+    mouseY <= basePos.y)
+  {
+    return true;
+  } else { 
+    return false;
+  }
 }
 // fin
 
 /*
 void update(int x, int y) {
-  if (boutonOnOver(150, 710, 50) ) {
-    boutonOnOver = true;
-  } else if ( boutonOffOver(150, 840, 50) ) {
-    boutonOnOver = false;
-  }
-  }
-  
-boolean boutonOnOver(int x, int y, int diameter) {
-  float disX = x - mouseX;
-  float disY = y - mouseY;
-  if (sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-    return true;
-  } else {
-    return false;
-  }
+ if (boutonOnOver(150, 710, 50) ) {
+ boutonOnOver = true;
+ } else if ( boutonOffOver(150, 840, 50) ) {
+ boutonOnOver = false;
+ }
  }
  
-boolean boutonOffOver(int x, int y, int diameter) 
-{
-  float disX = x - mouseX;
-  float disY = y - mouseY;
-  if (sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
-    return true;
-    
- 
-  } else {
-    return false;
-  }
+ boolean boutonOnOver(int x, int y, int diameter) {
+ float disX = x - mouseX;
+ float disY = y - mouseY;
+ if (sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
+ return true;
+ } else {
+ return false;
  }
-  
-  
-*/
+ }
+ 
+ boolean boutonOffOver(int x, int y, int diameter) 
+ {
+ float disX = x - mouseX;
+ float disY = y - mouseY;
+ if (sqrt(sq(disX) + sq(disY)) < diameter/2 ) {
+ return true;
+ 
+ 
+ } else {
+ return false;
+ }
+ }
+ 
+ 
+ */
