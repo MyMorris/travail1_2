@@ -552,14 +552,14 @@ void SonAmbiant()
 {
   if (tapisIsOn)
   {
-    /*machineon.trigger();//*****************************************
+    machineon.trigger();//*****************************************
     bruitagetapis.trigger();//*****************************************
-    bruitagemachine.trigger();//******************************************/
+    bruitagemachine.trigger();//*****************************************
   } else
   {
-    /*machineon.stop();//*****************************************************
+    machineon.stop();//*****************************************************
     bruitagetapis.stop();//**************************************************
-    bruitagemachine.stop();//*********************************/
+    bruitagemachine.stop();//********************************
   }
 
   if (currentPosBoite.x >=645 && currentPosBoite.x <= 660) 
