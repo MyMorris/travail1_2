@@ -269,10 +269,6 @@ void draw() {
   textFont(f);
   fill(#E82D2C);
   text("BY40125", width / 1.5f, height / 1.125f); 
-  //if (keyPressed) 
-  //   fill(#FFD52E);
-  // text("APPROUVÉE", width / 1.52f, height / 1.085f);
-  //textSize(20);// texte ecran
   textFont(policeMoniteur, 20);
   fill(255);
   text("monitor 1", 155, 100);
