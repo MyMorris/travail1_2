@@ -110,7 +110,7 @@ void setup() {
   policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
   policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
   size(1920, 1080); // full hd
-  img= loadImage("background photo.jpg"); //load background-image 
+  img= loadImage("background_photo.jpg"); //load background-image 
   frameRate(30); // 30 images seconde
 
   // --------affichage image fixe-----------
@@ -273,7 +273,7 @@ if (bras==-150){
   text("BY40125", width / 1.5f, height / 1.125f); 
   //if (keyPressed) 
  //   fill(#FFD52E);
-  text("APPROUVÉE", width / 1.52f, height / 1.085f);
+ // text("APPROUVÉE", width / 1.52f, height / 1.085f);
   //textSize(20);// texte ecran
   textFont(policeMoniteur, 20);
   fill(255);
@@ -329,6 +329,9 @@ void BoiteMouvement()
     if (currentPosBoite.x <= 1180 && tapisIsOn)
     {
       currentPosBoite.x += vitesseX;
+        textFont(f);
+        fill(#E82D2C);
+        text("APPROUVÉE", width / 1.52f, height / 1.085f);
       
     }else if (brasCanMoveBox)
     {
