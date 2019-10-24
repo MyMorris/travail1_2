@@ -106,7 +106,7 @@ void setup() {
   currentVitesseY = orgVitesseY;
   vitesseX=20;
   chariotOrgPosX = chariotPos.x;
-  
+
   policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
   policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
   size(1920, 1080); // full hd
@@ -114,36 +114,36 @@ void setup() {
   frameRate(30); // 30 images seconde
 
   // --------affichage image fixe-----------
-  
+
   machine = loadShape("machine.svg");//SVG machine
   distributeur = loadShape("distributeur.svg");//SVG distributeur
   ecran = loadShape("ecran.svg");//SVG ecran de controle
 
   //---------affichage image mouvement -------
-  
+
   chariot= loadShape("chariotportique.svg");
   boitesupport= loadShape("boitesupport.svg");
   boite = loadShape("boite.svg");//+
-  
+
   //--------affichage image animé------------
-  
+
   lumiereverte= loadShape("lumiereverte.svg");// lumiere machine on
   lumiererouge= loadShape("lumiererouge.svg");// lumiere machine off
   gyroscopeoff= loadShape("gyroscopeoff.svg"); 
   gyroscopeon= loadShape("gyroscopeon.svg");
 
   //--------affichage bras mecanique---------
-  
+
   brasmecanique= loadShape("brasmecanique.svg");
 
   //----------affichage video--------------
-  
+
   video = new Movie(this, "videosurveillance.mov");
   video.frameRate(30);
   video.loop();
-  
+
   // audio-------------------
-  
+
   minim = new Minim(this);
   machineon = minim.loadSample("bruitagemachine.wav");
   bruitagetapis = minim.loadSample("bruitagetapis.wav");
@@ -155,7 +155,7 @@ void setup() {
   rangeboite= minim.loadSample("bruitrangement.mp3");
   manette= minim.loadSample("bras.mp3");
   manette2= minim.loadSample("manette.mp3");
-  
+
   //----typo
   f=createFont("Lato-Regular.ttf", 20);
 }
@@ -163,24 +163,24 @@ void setup() {
 //******************************************
 
 void draw() {
-  
+
   pushMatrix();
   imageMode(CORNER);//  background
   tint(90);
   image(img, 0, 0, width, height);
 
   //-------support avant et arriere tapis roulant
-  
+
   fill (74, 187, 183);// couleur bleu moodboard
   rect (1250, 900, 150, 100);// support arriere
   rect (387, 900, 130, 100); // support avant
 
   //----- Machine -------
-  
+
   shape(machine, -450, 400, 1200, 800);
 
   //-------chariot portique-----
-  
+
   rect (1200, 480, 750, 60);// portique 
 
   //--------gyroscope-------
@@ -194,60 +194,58 @@ void draw() {
   }
 
   //---------animation bras mecanique distributeur
-
- if (bouge==480) {
-   bras=bras+15;
-   }
-  if (bouge==380) {
-   bras=bras-15;
-   }
-   if (bras<-150){
-     bras=-150;
-   }  
-    if (bras>120){
-     bras=120;
-   } 
-    if (touche==1) {
-      if (bras<120){
-  manette.trigger();
-}
-   }
-   else
-   {
-     manette.stop();
-   }  
-    if (touche==0) {
-      if (bras>-150){
-  manette2.trigger();
-}
-   }
-   else
-   {
-     manette2.stop();
-   }  
-  shape(brasmecanique, 309, bras, 1200, 1400);
- if (bras<=120){
-   if (ess==1){
-  shape(boitesupport,671,bras+630,450,80);
-}
-}
-if (bras==-150){
-   
-   shape(boitesupport,671,bras+630,450,80);
-}
   
+  if (bouge==480) {
+    bras=bras+15;
+  }
+  if (bouge==380) {
+    bras=bras-15;
+  }
+  if (bras<-150) {
+    bras=-150;
+  }  
+  if (bras>120) {
+    bras=120;
+  } 
+  if (touche==1) {
+    if (bras<120) {
+      manette.trigger();
+    }
+  } else
+  {
+    manette.stop();
+  }  
+  if (touche==0) {
+    if (bras>-150) {
+      manette2.trigger();
+    }
+  } else
+  {
+    manette2.stop();
+  }  
+  shape(brasmecanique, 309, bras, 1200, 1400);
+  if (bras<=120) {
+    if (ess==1) {
+      shape(boitesupport, 671, bras+630, 450, 80);
+    }
+  }
+  if (bras==-150) {
+
+    shape(boitesupport, 671, bras+630, 450, 80);
+  }
+
   //-------- Distributeur -----
   shape(distributeur, 150, 10, 1500, 900);
   fill(238, 81, 72);
-  circle (1052,bouge,30);
- if (keyPressed == true) {
+  circle (1052, bouge, 30);
+  if (keyPressed == true) {
     bouge=480;
     touche=1;
   } else {
     bouge=380;
     touche=0;
   }
-  
+
   //-------- Écran de controle -------
   shape(ecran, 10, -350, 700, 700);
 
@@ -264,7 +262,7 @@ if (bras==-150){
   ellipse(150, 840, 50, 60);
 
   //-----------textes--------
-  
+
   textFont(f);
   fill(#FFD52E);
   text("Production #", width/1.5f, height/1.155f);
@@ -272,8 +270,8 @@ if (bras==-150){
   fill(#E82D2C);
   text("BY40125", width / 1.5f, height / 1.125f); 
   //if (keyPressed) 
- //   fill(#FFD52E);
- // text("APPROUVÉE", width / 1.52f, height / 1.085f);
+  //   fill(#FFD52E);
+  // text("APPROUVÉE", width / 1.52f, height / 1.085f);
   //textSize(20);// texte ecran
   textFont(policeMoniteur, 20);
   fill(255);
@@ -282,12 +280,13 @@ if (bras==-150){
   popMatrix();
   Boite();
   BrasMechanique();
- 
+
   //--------tapis roulant ----------------
-  
+
   Pontroulant();
   BoutonOnOff();
   LumiereMarche();
+  SonAmbiant();
 }
 
 // Called every time a new frame is available to read
@@ -310,13 +309,12 @@ void BoiteMouvement()
 {
   if (dropTheBox)
   {
-    if(currentPosBoite.y < 2000)
+    if (currentPosBoite.y < 2000)
     {
       brasCanMoveBox = false;
       currentVitesseY += currentVitesseY /3.00f;
       currentPosBoite.y += currentVitesseY;
-    }
-    else
+    } else
     {
       currentVitesseY = orgVitesseY;
       currentPosBoite.y = orgPosBoite.y;
@@ -325,15 +323,14 @@ void BoiteMouvement()
     }
   } else
   {
-   
+
     if (currentPosBoite.x <= 1180 && tapisIsOn)
     {
       currentPosBoite.x += vitesseX;
-        textFont(f);
-        fill(#E82D2C);
-        text("APPROUVÉE", width / 1.52f, height / 1.085f);
-      
-    }else if (brasCanMoveBox)
+      textFont(f);
+      fill(#E82D2C);
+      text("APPROUVÉE", width / 1.52f, height / 1.085f);
+    } else if (brasCanMoveBox)
     {
       textFont(f);
       fill(#FFD52E);
@@ -346,11 +343,14 @@ void BoiteMouvement()
     } else if (currentPosBoite.x <= 1180 && chariotPos.x >= chariotOrgPosX)
     {
       brasCanMoveBox = false;
-
     }
   }
 }
 
+
+
+//
+//
 // PontRoulant
 void Pontroulant() 
 {
@@ -370,6 +370,7 @@ void Pontroulant()
   line(p3.x, p3.y - (height / 20.0f), p4.x, p3.y - (height / 20.0f));
   AnimPontRoulant();
 }
+
 void AnimPontRoulant() {
 
   int speed = 0;
@@ -425,6 +426,9 @@ void LumiereMarche()
   popMatrix();
 }
 
+
+//
+//
 //BrasMechanique
 
 void BoutonBrasMechanique()
@@ -441,13 +445,12 @@ void BoutonBrasMechanique()
   redRectPos.x = triangleOneX.z;
   rect(redRectPos.x, redRectPos.y, redRectSize.x, redRectSize.y);
   popMatrix();
-  
 }
 
 void BrasMechanique()
 {
   //-------- animation bras mecanique chariot
-  
+
   pushMatrix();
 
   brasPos.x += brasMove;
@@ -458,7 +461,6 @@ void BrasMechanique()
   if (chariotPos.x >= 1400 || chariotPos.x <= chariotOrgPosX)
   {
     brasMove = 0;
-    
   }
   popMatrix();
 }
@@ -484,17 +486,11 @@ void mousePressed()
       boutonActivePos = boutonOffPos;
       redButon = color(255, 0, 0);
       greenButon = color(0, 100, 0);
-      machineon.trigger();
-      bruitagetapis.trigger();
-      bruitagemachine.trigger();
     } else
     {
       boutonActivePos = boutonOnPos;
       redButon = color(100, 0, 0);
       greenButon = color(0, 255, 0);
-      machineon.stop();
-      bruitagetapis.stop();
-      bruitagemachine.stop();
     }
   }
 
@@ -503,15 +499,14 @@ void mousePressed()
     if (brasMove != -15 && chariotPos.x > chariotOrgPosX)
     {
       brasMove = -brasMoveSpeed;
-     portique.trigger();//audio
-     
+      portique.trigger();//audio
     }
   } else if (mouseButton == LEFT && MouseSquareCollider(new PVector(triangleTwoX.y - 16, triangleY.z - 15), triangleSize))
   {
     if (brasMove != 15 && chariotPos.x < 1400)
     {
       brasMove = brasMoveSpeed;
-   portique.trigger();//audio
+      portique.trigger();//audio
     }
   } else if (mouseButton == LEFT  && RedButonCollider(redRectPos, redRectSize))
   {
@@ -520,7 +515,7 @@ void mousePressed()
     {
       dropTheBox = true;
       brasCanMoveBox = false;
-       rangeboite.trigger();//audio
+      rangeboite.trigger();//audio
     }
   }
 }
@@ -550,6 +545,26 @@ boolean RedButonCollider(PVector basePos, PVector size)
     return true;
   } else { 
     return false;
+  }
+}
+
+void SonAmbiant()
+{
+  if (tapisIsOn)
+  {
+    /*machineon.trigger();//*****************************************
+    bruitagetapis.trigger();//*****************************************
+    bruitagemachine.trigger();//******************************************/
+  } else
+  {
+    /*machineon.stop();//*****************************************************
+    bruitagetapis.stop();//**************************************************
+    bruitagemachine.stop();//*********************************/
+  }
+
+  if (currentPosBoite.x >=645 && currentPosBoite.x <= 660) 
+  { 
+    bruitsourd.trigger();//*****************************************
   }
 }
 // fin
