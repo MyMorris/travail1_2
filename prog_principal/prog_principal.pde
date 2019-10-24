@@ -121,16 +121,16 @@ void setup() {
 
   //---------affichage image mouvement -------
   
-  chariot= loadShape("chariot portique.svg");
-  boitesupport= loadShape("boite support.svg");
+  chariot= loadShape("chariotportique.svg");
+  boitesupport= loadShape("boitesupport.svg");
   boite = loadShape("boite.svg");//+
   
   //--------affichage image animé------------
   
-  lumiereverte= loadShape("lumiere verte.svg");// lumiere machine on
-  lumiererouge= loadShape("lumiere rouge.svg");// lumiere machine off
-  gyroscopeoff= loadShape("gyroscope off.svg"); 
-  gyroscopeon= loadShape("gyroscope on.svg");
+  lumiereverte= loadShape("lumiereverte.svg");// lumiere machine on
+  lumiererouge= loadShape("lumiererouge.svg");// lumiere machine off
+  gyroscopeoff= loadShape("gyroscopeoff.svg"); 
+  gyroscopeon= loadShape("gyroscopeon.svg");
 
   //--------affichage bras mecanique---------
   
@@ -138,7 +138,7 @@ void setup() {
 
   //----------affichage video--------------
   
-  video = new Movie(this, "video surveillance.mov");
+  video = new Movie(this, "videosurveillance.mov");
   video.frameRate(30);
   video.loop();
   
