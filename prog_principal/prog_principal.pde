@@ -134,7 +134,7 @@ void setup() {
 
   //--------affichage bras mecanique---------
   
-  brasmecanique= loadShape("bras mecanique.svg");
+  brasmecanique= loadShape("brasmecanique.svg");
 
   //----------affichage video--------------
   
