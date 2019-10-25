@@ -110,7 +110,8 @@ void setup() {
   policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
   policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
   size(1920, 1080); // full hd
-  img= loadImage("background_photo.jpg"); //load background-image 
+  img= loadImage("background_photo.jpg"); //load background-image
+  img.filter(GRAY);
   frameRate(30); // 30 images seconde
 
   // --------affichage image fixe-----------
