@@ -184,6 +184,7 @@ void draw() {
   imageMode(CORNER);//  background
   tint(90);
   image(img, 0, 0, width, height);
+  filter(GRAY);
 
   //-------support avant et arriere tapis roulant
 
