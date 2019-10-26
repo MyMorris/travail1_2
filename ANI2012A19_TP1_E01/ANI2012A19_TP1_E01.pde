@@ -285,7 +285,7 @@ void draw() {
 
   textFont(f);
   fill(#FFD52E);
-  text("Production #", width/1.5f, height/1.155f);
+  text("Production #", width/1.51f, height/1.155f);
   textFont(f);
   fill(#E82D2C);
   text("BY40125", width / 1.5f, height / 1.125f); 
