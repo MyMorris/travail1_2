@@ -10,7 +10,7 @@ PImage img;// background
 PShape machine;//SVG machine
 PShape distributeur; //SVG distributeur
 PShape ecran; // SVG ecran de controle
-
+PShape affichage;// SVG panneau affichage
 // video---------------------------
 
 import processing.video.*;
@@ -55,7 +55,7 @@ AudioSample portique;
 AudioSample rangeboite;
 AudioSample manette;
 AudioSample manette2;
-
+AudioSample approuve;
 //------tapis roulant-------------------
 
 PVector p3 = new PVector(580, -950, 00);
@@ -105,7 +105,7 @@ int count = 500;
 int colorBack = 0;
 int type;
 ParticleSystem ps3;
-// variables;
+int son;
 
 
 void setup() {
@@ -122,14 +122,14 @@ void setup() {
 
   policeONOFF = loadFont("ArialMT-45.vlw");  //Police de caractère pour le bouton ON/OFF (
   policeMoniteur = loadFont("Georgia-20.vlw");  //Police de caractère pour le moniteur
-
+  son=1;
 
   // --------affichage image fixe-----------
 
   machine = loadShape("machine.svg");//SVG machine
   distributeur = loadShape("distributeur.svg");//SVG distributeur
   ecran = loadShape("ecran.svg");//SVG ecran de controle
-
+  affichage = loadShape("affichage.svg");//panneau affichage
   //---------affichage image mouvement -------
 
   chariot= loadShape("chariotportique.svg");
@@ -166,7 +166,7 @@ void setup() {
   rangeboite= minim.loadSample("bruitrangement.mp3");
   manette= minim.loadSample("bras.mp3");
   manette2= minim.loadSample("manette.mp3");
-
+  approuve= minim.loadSample("approuve.mp3")
   //----typo
   f=createFont("Lato-Regular.ttf", 20);
   
@@ -269,6 +269,9 @@ void draw() {
   //-------- Écran de controle -------
   shape(ecran, 10, -350, 700, 700);
 
+    //--------panneau d'affichage-------
+  shape(affichage, 1300, 60, 500, 600);// affichage panneau
+
   //-----------video-----------
   //tint(91 , 255, 127, 255);
   noTint();
@@ -339,22 +342,30 @@ void BoiteMouvement()
       currentPosBoite.y = orgPosBoite.y;
       currentPosBoite.x = orgPosBoite.x;
       dropTheBox = false;
+      son=1;
     }
   } else
   {
 
     if (currentPosBoite.x <= 1180 && tapisIsOn)
     {
-      currentPosBoite.x += vitesseX;
+     currentPosBoite.x += vitesseX;
       textFont(f);
-      fill(#E82D2C);
-      text("APPROUVÉE", width / 1.52f, height / 1.085f);
+      son=1;
+      fill(238, 81, 72);
+      textSize(50);
+      text("ATTENTION", 1407, 390);
     } else if (brasCanMoveBox)
     {
       textFont(f);
-      fill(#FFD52E);
-      text("APPROUVÉE", width / 1.52f, height / 1.085f);
-      currentPosBoite.x += brasMove;
+      fill(70, 200, 121);
+      textSize(50);
+     text("APPROUVÉE", 1400,390);
+      if (son==1){
+      approuve.trigger();
+      son=0;
+     }
+     currentPosBoite.x += brasMove; 
     } else if (currentPosBoite.x >= 1180 && chariotPos.x <= chariotOrgPosX)
     {
       brasCanMoveBox = true;
